@@ -56,17 +56,18 @@ public class StudentServiceImpl implements StudentService
 
     @Transactional
     @Override
-    public Student save(Student student) //   --- MVP
+    public Student save(Student student) //   --- MVP.
     {
-        if (studrepos.findByStudnameContainingIgnoreCase(student.getStudname()) != null)
+        if (studrepos.findByStudname(student.getStudname()) != null)
         {
             throw new ResourceFoundException(student.getStudname() + " is alreay taken! ");
+        } else {
+            Student newStudent = new Student();
+
+            newStudent.setStudname(student.getStudname());
+
+            return studrepos.save(newStudent);
         }
-        Student newStudent = new Student();
-
-        newStudent.setStudname(student.getStudname());
-
-        return studrepos.save(newStudent);
     }
 
     @Override

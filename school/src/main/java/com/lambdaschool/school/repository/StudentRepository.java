@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface StudentRepository extends CrudRepository<Student, Long>
 {
+    Student findByStudname(String username);
+
     List<Student> findByStudnameContainingIgnoreCase(String name);
 }
