@@ -1,6 +1,7 @@
 package com.lambdaschool.school.handlers;
 
 import com.lambdaschool.school.exceptions.ResourceFoundException;
+import com.lambdaschool.school.exceptions.ResourceNotFoundException;
 import com.lambdaschool.school.model.ErrorDetail;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.Ordered;
@@ -26,9 +27,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler
     public RestExceptionHandler()
     {
         super();
-    }
+    } //                |   will also overide default ENFE
 
-    @ExceptionHandler({EntityNotFoundException.class, UsernameNotFoundException.class})
+    @ExceptionHandler({ResourceNotFoundException.class, EntityNotFoundException.class, UsernameNotFoundException.class})
     public ResponseEntity<?> handleResourceNotFoundException(Exception rnfe,
                                                              HttpServletRequest request)
     {
@@ -66,7 +67,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler
 
         errorDetail.setTimestamp(new Date().getTime());
         errorDetail.setStatus(HttpStatus.BAD_REQUEST.value());
-        errorDetail.setTitle(ex.getPropertyName() + " Parameter Type Mismatch");
+        errorDetail.setTitle(ex.getValue() + " Parameter Type Mismatch");
+        //                          ^ changed from getPropertyName()
         errorDetail.setDetail(ex.getMessage());
         errorDetail.setDevelopermessage(request.getDescription(true));
 

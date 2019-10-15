@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class ResourceFoundException extends RuntimeException
 {
-    private static final long serialVersionUID = 1L; // indentifies excception
+    private static final long serialVersionUID = 1L; // indentifies excception, digits must be unique
 
     public ResourceFoundException(String message)
     {

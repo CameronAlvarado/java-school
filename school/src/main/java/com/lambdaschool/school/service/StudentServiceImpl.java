@@ -1,5 +1,7 @@
 package com.lambdaschool.school.service;
 
+import com.lambdaschool.school.exceptions.ResourceFoundException;
+import com.lambdaschool.school.exceptions.ResourceNotFoundException;
 import com.lambdaschool.school.model.Course;
 import com.lambdaschool.school.model.Student;
 import com.lambdaschool.school.repository.StudentRepository;
@@ -26,10 +28,10 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public Student findStudentById(long id) throws EntityNotFoundException
+    public Student findStudentById(long id) throws ResourceNotFoundException
     {
         return studrepos.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
+                .orElseThrow(() -> new ResourceNotFoundException("User id: " + Long.toString(id) + " not found."));
     }
 
     @Override
@@ -41,21 +43,25 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public void delete(long id) throws EntityNotFoundException
+    public void delete(long id) throws ResourceNotFoundException
     {
         if (studrepos.findById(id).isPresent())
         {
             studrepos.deleteById(id);
         } else
         {
-            throw new EntityNotFoundException(Long.toString(id));
+            throw new ResourceNotFoundException("User id: " + Long.toString(id) + " not found.");
         }
     }
 
     @Transactional
     @Override
-    public Student save(Student student)
+    public Student save(Student student) //   --- MVP
     {
+        if (studrepos.findByStudnameContainingIgnoreCase(student.getStudname()) != null)
+        {
+            throw new ResourceFoundException(student.getStudname() + " is alreay taken! ");
+        }
         Student newStudent = new Student();
 
         newStudent.setStudname(student.getStudname());
@@ -67,7 +73,7 @@ public class StudentServiceImpl implements StudentService
     public Student update(Student student, long id)
     {
         Student currentStudent = studrepos.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
+                .orElseThrow(() -> new EntityNotFoundException("User id: " + Long.toString(id) + " not found."));
 
         if (student.getStudname() != null)
         {
