@@ -17,7 +17,7 @@ public class SchoolApplication
     {
         ApplicationContext ctx = SpringApplication.run(SchoolApplication.class, args);
 
-        DispatcherServlet dispatcherServlet = (DispatcherServlet) ctx.getBean("dispatcherServlet"); // rest exeptions need proper spelling
+        DispatcherServlet dispatcherServlet = (DispatcherServlet) ctx.getBean("dispatcherServlet"); // rest exceptions need proper spelling
         dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
     }
 
