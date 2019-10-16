@@ -48,14 +48,14 @@ public class StudentController
     // http://localhost:2019/students/students/paging/?page=0&size=10&sort=studname,desc
     @GetMapping(value = "/students/paging",
             produces = {"application/json"})
-    public ResponseEntity<?> listAllStudentsByPage(@PageableDefault(page = 0, size = 5) Pageable pageable)
+    public ResponseEntity<?> listAllStudentsByPage(@PageableDefault(page = 0, size = 3) Pageable pageable)
     {
         List<Student> myStudents = studentService.findAllPageable(pageable);
 //      List<Student> myStudents = studentService.findAllPageable(Pageable.unpaged()); <-- un-pages using code.
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
-    
+
     private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
     //               slf4j ^
 
@@ -98,6 +98,10 @@ public class StudentController
     }
 
 
+    @ApiOperation(value = "Saves a new Student Object", response = Student.class)
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Student Saved", response = Student.class),
+                           @ApiResponse(code = 400, message = "Student Already Exists", response = ErrorDetail.class)})
+
     @PostMapping(value = "/Student",
             consumes = {"application/json"},
             produces = {"application/json"})
@@ -116,6 +120,10 @@ public class StudentController
     }
 
 
+    @ApiOperation(value = "Updates a student accociated with the student ID", response = Student.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Student Updated", response = Student.class),
+            @ApiResponse(code = 404, message = "Student Not Found", response = ErrorDetail.class)})
+
     @PutMapping(value = "/Student/{Studentid}")
     public ResponseEntity<?> updateStudent(
             @RequestBody
@@ -127,6 +135,10 @@ public class StudentController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    @ApiOperation(value = "Deletes a student accociated with the student ID", response = Student.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Student Deleted", response = Student.class),
+            @ApiResponse(code = 404, message = "Student Not Found", response = ErrorDetail.class)})
 
     @DeleteMapping("/Student/{Studentid}")
     public ResponseEntity<?> deleteStudentById(
