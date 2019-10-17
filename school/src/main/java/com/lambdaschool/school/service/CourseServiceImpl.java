@@ -1,5 +1,6 @@
 package com.lambdaschool.school.service;
 
+import com.lambdaschool.school.exceptions.ResourceFoundException;
 import com.lambdaschool.school.exceptions.ResourceNotFoundException;
 import com.lambdaschool.school.model.Course;
 import com.lambdaschool.school.model.Student;
@@ -47,6 +48,23 @@ public class CourseServiceImpl implements CourseService
     public ArrayList<CountStudentsInCourses> getCountStudentsInCourse()
     {
         return courserepos.getCountStudentsInCourse();
+    }
+
+    @Transactional
+    @Override
+    public Course save(Course course) //   --- MVP.
+    {
+        if (courserepos.findByCoursename(course.getCoursename()) != null)
+        {
+            throw new ResourceFoundException(course.getCoursename() + " is alreay taken! ");
+        } else {
+            Course newCourse = new Course();
+
+            newCourse.setCoursename(course.getCoursename());
+            newCourse.setInstructor(course.getInstructor());
+
+            return courserepos.save(newCourse);
+        }
     }
 
     @Transactional

@@ -21,6 +21,7 @@ public class Instructor
     @ApiModelProperty(name = "instructname", value = "Instructor Name", required = true, example = "John Mitchel")
     private String instructname;
 
+//    @ApiModelProperty(name = "courses", value = "courses")
     @OneToMany(mappedBy = "instructor")
     @JsonIgnoreProperties("instructors")
     private List<Course> courses = new ArrayList<>();
