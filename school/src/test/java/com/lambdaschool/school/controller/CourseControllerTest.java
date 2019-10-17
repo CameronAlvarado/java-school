@@ -91,24 +91,24 @@ public class CourseControllerTest // unit test
 
     @Test
     public void listAllCoursesByPage() throws Exception
-    {
+        {
 //        String apiUrl = "/courses/courses";
-        String apiUrl = "/courses/courses/paging";
+            String apiUrl = "/courses/courses/paging";
 
 //        Mockito.when(courseService.findAll()).thenReturn(courseList);
-        Mockito.when(courseService.findAllPageable(Mockito.any(Pageable.class))).thenReturn(courseList);
+            Mockito.when(courseService.findAllPageable(Mockito.any(Pageable.class))).thenReturn(courseList);
 
-        RequestBuilder rb = MockMvcRequestBuilders.get(apiUrl).accept(MediaType.APPLICATION_JSON);
+            RequestBuilder rb = MockMvcRequestBuilders.get(apiUrl).accept(MediaType.APPLICATION_JSON);
 
-        MvcResult r = mockMvc.perform(rb).andReturn();
-        String tr = r.getResponse().getContentAsString();
+            MvcResult r = mockMvc.perform(rb).andReturn();
+            String tr = r.getResponse().getContentAsString();
 
 
 //        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-        ObjectMapper mapper = new ObjectMapper();
-        String er = mapper.writeValueAsString(courseList);
+            ObjectMapper mapper = new ObjectMapper();
+            String er = mapper.writeValueAsString(courseList);
 
-        assertEquals("Rest API Returns List", er, tr);
+            assertEquals("Rest API Returns List", er, tr);
     }
 
     @Test
@@ -118,6 +118,7 @@ public class CourseControllerTest // unit test
 
         String course5Name = "Number 1 Test Course";
         Instructor testInstruct = new Instructor("Jerry Jengles");
+        testInstruct.setInstructid(100);
         Course c5 = new Course(course5Name, testInstruct);
 
         ObjectMapper mapper = new ObjectMapper();
