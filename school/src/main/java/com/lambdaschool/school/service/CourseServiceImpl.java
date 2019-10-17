@@ -29,6 +29,13 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
+    public Course findCourseById(long id) throws ResourceNotFoundException
+    {
+        return courserepos.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User id: " + Long.toString(id) + " not found."));
+    }
+
+    @Override
     public ArrayList<Course> findAllPageable(Pageable pageable)
     {
         ArrayList<Course> list = new ArrayList<>();

@@ -20,6 +20,4 @@ public class SchoolApplication
         DispatcherServlet dispatcherServlet = (DispatcherServlet) ctx.getBean("dispatcherServlet"); // rest exceptions need proper spelling
         dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
     }
-zz
-
 }

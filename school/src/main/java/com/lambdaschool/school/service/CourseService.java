@@ -12,6 +12,8 @@ public interface CourseService
 {
     ArrayList<Course> findAll();
 
+    Course findCourseById(long id);
+
     ArrayList<Course> findAllPageable(Pageable pageable);
 
     ArrayList<CountStudentsInCourses> getCountStudentsInCourse();
