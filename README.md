@@ -12,8 +12,13 @@ Get the endpoint GET /courses/studcount working
 
 Add appropriate exception handling routines. Required exceptions to handle are when
   * a resource is not found
+  - EntityNotFound?
+
   * the wrong data type is used for a path variable
+  - BAD_REQUEST
+
   * a non-handled endpoint is accessed (a URL not found exception)
+  - URLNotFound?
 
 Add appropriate logging routines. Required logging include
   * Activating actuator endpoints
